@@ -61,17 +61,22 @@
                         </form>
 
 
-
-                        <table id="results" class="ui single line table">
+                        <table id="results" class="ui single line table hidden">
                             <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Value</th>
+                                <th>TCG Value</th>
+                                <th>Rand Value</th>
                             </tr>
                             </thead>
                         </table>
 
-                        <div id="ajaxResult" class="ui segment"></div>
+                        <div id="spinner" class="loader hidden">
+                            <img src="/svg/spinner.gif"/>
+                        </div>
+
+                        <div id="ajaxResult" class="ui segment hidden">
+                        </div>
 
                     </div>
                 </div>

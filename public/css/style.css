@@ -14,6 +14,7 @@ body {
   background-color: #ffffff;
   border-radius: .28571429rem;
   margin-left: 1em;
+  height: 100%;
 }
 .ui.two.wide.column {
   padding-top: 0;
@@ -36,4 +37,14 @@ body {
   background: linear-gradient(to bottom, #4CA1AF, #2C3E50);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background-repeat: no-repeat;
+}
+.loader {
+  margin-top: 2em;
+  text-align: center;
+}
+.loader img {
+  max-width: 100px;
+}
+.hidden {
+  display: none!important;
 }

@@ -43,6 +43,7 @@
                 <table class="ui celled table">
                     <thead>
                     <tr class="center aligned">
+                        <th> </th>
                         <th>Name</th>
                         <th class="eleven wide">Oracle Text</th>
                         <th>Link</th>
@@ -51,6 +52,9 @@
                     <tbody>
                     @foreach ($cards as $card)
                     <tr>
+                        <td class="center aligned">
+                            <a href="{{ URL('/deleteCard/'.$card->id )}}" class="ui compact red button">Delete</a>
+                            </td>
                         <td class="center aligned">{{$card -> name}}</td>
                         <td class="eleven wide">{{$card -> oracle_text}}</td>
                         <td class="center aligned"><a href="{{$card -> scryfall_uri}}">Scryfall Link</a></td>

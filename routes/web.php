@@ -21,8 +21,6 @@ Route::get('/stock', 'TestController@stock');
 
 Route::get('/list', 'WishlistController@list');
 
-//Route::get('/stock', function () {
-//    $products = App\Product::all();
-//    return View::make('stock', compact('products'));
-//});
+Route::get('/deleteCard/{card}', 'WishlistController@removeFromWishlist');
+
 

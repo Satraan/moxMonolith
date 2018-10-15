@@ -3,9 +3,12 @@
 
 function renderCard(card){
  console.log("rendering card");
-
+    $("#results").removeClass('hidden');
     var table = document.getElementById("results");
     var row = table.insertRow(1);
+
+    var localPrice = card.usd*14.5;
+    localPrice = Math.ceil(localPrice);
 
     row.innerHTML =
         '<td>' +
@@ -13,6 +16,9 @@ function renderCard(card){
         '</td>'+
         '<td>' +
             "$ " + card.usd +
+        '</td>' +
+        '<td>' +
+            "R " + localPrice +
         '</td>';
 
 
@@ -29,6 +35,9 @@ function init(){
             error: function() {
             },
             success: function(data) {
+                $("#ajaxResult").removeClass('hidden');
+                $("#spinner").addClass('hidden');
+
                 $("#ajaxResult").append(
                     "<p>"+ data + "</p>"
                 );
@@ -103,6 +112,9 @@ function init(){
     //Scrapers
     $( '#scrapeTopDeck').on( "click", function() {
         event.preventDefault();
+        $("#ajaxResult").html("").addClass('hidden');
+        $("#spinner").removeClass('hidden');
+        $("#results").removeClass('hidden');
         var e = document.getElementById("select-card");
         var value = e.options[e.selectedIndex].text;
 
@@ -168,6 +180,9 @@ function init(){
     });
     $( '#scrapeSadRobot').on( "click", function() {
         event.preventDefault();
+        $("#ajaxResult").html("").addClass('hidden');
+        $("#spinner").removeClass('hidden');
+        $("#results").removeClass('hidden');
         var e = document.getElementById("select-card");
         var query = e.options[e.selectedIndex].text;
         var target = 'SadRobot';
@@ -175,6 +190,9 @@ function init(){
     });
     $( '#scrapeGeekhome').on( "click", function() {
         event.preventDefault();
+        $("#ajaxResult").html("").addClass('hidden');
+        $("#spinner").removeClass('hidden');
+        $("#results").removeClass('hidden');
         var e = document.getElementById("select-card");
         var query = e.options[e.selectedIndex].text;
         var value = e.options[e.selectedIndex].value;
@@ -184,6 +202,10 @@ function init(){
     });
     $( '#scrapeAll').on( "click", function() {
         event.preventDefault();
+        $("#ajaxResult").html("").addClass('hidden');
+        $("#spinner").removeClass('hidden');
+        $("#results").removeClass('hidden');
+
         var e = document.getElementById("select-card");
         var query = e.options[e.selectedIndex].text;
 
@@ -211,20 +233,8 @@ function init(){
             }
         });
     });
-}
 
 
-
-
-function getOracleText() {
-    console.log("getting text");
-    var request = $.ajax({
-        url: "https://cloudproject-217611.appspot.com/api/cards",
-        success: function (result) {
-            console.log(result);
-            $('#oracle-text').html(result);
-        }
-    });
 
 }
 

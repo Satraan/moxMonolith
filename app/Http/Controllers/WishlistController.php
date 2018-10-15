@@ -30,11 +30,7 @@ class WishlistController extends BaseController
         $q = $request->get('query');
         $card = Card::where('scryfall_id', '=', $q)->first();
 
-
         $wishlistId = 1;
-
-
-
 
         $wishlist = Wishlist::findOrFail($wishlistId);
 
@@ -44,7 +40,12 @@ class WishlistController extends BaseController
 
     }
     //Removes a card from a wishlist
-    public function removeFromWishlist(){}
+    public function removeFromWishlist($cardId){
+        $card = DB::table('card_wishlist')->where('card_id', $cardId)->delete();
+
+        $cards = Card::whereHas('wishlists')->get();
+        return view("list",compact('cards'));
+    }
 
 
     //Renders the wishlist page

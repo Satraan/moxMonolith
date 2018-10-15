@@ -89,15 +89,18 @@ class ScrapingController extends BaseController
         $url = "https://sadrobot.co.za/shop/" . $q;
         $crawler = $client->request('GET', $url);
 
+        $crawler->filter('p.out-of-stock')->each(function ($node) use (&$result){
+            $result = $node->text();
+        });
+
+        if (!empty($result)){
+            return "SadRobot does not have stock.";
+        }
+
         $crawler->filter('p.price > .amount')->each(function ($node) use (&$price, &$stock){
             $price = $node->text() . " ";
             $stock++;
         });
-
-        if ($stock == 0) {
-            $result = "SadRobot does not have stock.";
-            return $result;
-        }
 
         $result = "SadRobot has " . $stock . " " . $q . " in stock for " . $price;
         return $result;
