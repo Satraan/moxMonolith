@@ -11,20 +11,15 @@
 |
 */
 
-
-
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/wishlist', function () {
     $products = App\Product::all();
     return View::make('wishlist', compact('products'));
 //    return view('wishlist' , );
 });
 
-
 Route::get('/stock', 'TestController@stock');
+
+Route::get('/list', 'WishlistController@list');
 
 //Route::get('/stock', function () {
 //    $products = App\Product::all();

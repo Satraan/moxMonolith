@@ -37,14 +37,15 @@
                 <div class="ui two column grid">
                     <div class="ui two wide column">
                         <div class="ui vertical buttons">
-                            <button id="scrapeTopDeck" type="submit" class="ui teal button">Search TopDeck</button>
-                            <button id="scrapeGeekhome" type="submit" class="ui teal button">Search Geekhome</button>
-                            <button id="scrapeSadRobot" type="submit" class="ui teal button">Search SadRobot</button>
-                            <button id="scrapeAll" type="submit" class="ui primary button">Search All</button>
+                            <button id="scrapeTopDeck" type="submit" class="ui grey button">Search TopDeck</button>
+                            <button id="scrapeGeekhome" type="submit" class="ui grey button">Search Geekhome</button>
+                            <button id="scrapeSadRobot" type="submit" class="ui grey button">Search SadRobot</button>
+                            <button id="scrapeAll" type="submit" class="ui teal button">Search All</button>
+                            <button id="addToWishlist" type="submit" class="ui teal button">Add to Wishlist</button>
                         </div>
-                        <button id="addToWishlist" type="submit" class="ui primary button">Add to Wishlist</button>
+
                     </div>
-                    <div class="ui twelve wide column">
+                    <div class="ui twelve wide column search-cards">
                         <form id="searchCards" class="ui form">
                             <div class="field">
                                 <label for="search">Search for a card</label>

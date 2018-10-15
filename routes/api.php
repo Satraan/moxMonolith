@@ -24,11 +24,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/addToWishlist', 'TestController@add');
 
 
-Route::get('/scrapeTopDeck', 'TestController@scrapeTopDeck');
-Route::get('/scrapeDracoti', 'TestController@scrapeDracoti');
-Route::get('/scrapeSadRobot', 'TestController@scrapeSadRobot');
-Route::get('/scrapeGeekhome', 'TestController@scrapeGeekhome');
-Route::get('/scrapeAll', 'TestController@scrapeAll');
+
+Route::get('/scrapeTopDeck', 'ScrapingController@scrapeTopDeck');
+Route::get('/scrapeDracoti', 'ScrapingController@scrapeDracoti');
+Route::get('/scrapeSadRobot', 'ScrapingController@scrapeSadRobot');
+Route::get('/scrapeGeekhome', 'ScrapingController@scrapeGeekhome');
+//Route::get('/scrapeAll', 'ScrapingController@scrapeAll');
 
 Route::get('/testApi', function (){
 

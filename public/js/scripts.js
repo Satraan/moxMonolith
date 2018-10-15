@@ -30,7 +30,7 @@ function init(){
             },
             success: function(data) {
                 $("#ajaxResult").append(
-                    "<p>" + target + " : " + data + "</p>"
+                    "<p>"+ data + "</p>"
                 );
                 console.log(data);
             }
