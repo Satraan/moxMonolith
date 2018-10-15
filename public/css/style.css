@@ -1,16 +1,14 @@
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
 .ui.container {
   padding-top: 3em;
 }
 .search-image {
   width: 50px;
-}
-body {
-  background: #2C3E50;
-  /* fallback for old browsers */
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-gradient(linear, left top, left bottom, from(#4CA1AF), to(#2C3E50));
-  background: linear-gradient(to bottom, #4CA1AF, #2C3E50);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .ui.twelve.wide.column.search-cards {
   background-color: #ffffff;
@@ -28,4 +26,14 @@ body {
 #addToWishlist {
   border-top-left-radius: .28571429rem;
   border-top-right-radius: .28571429rem;
+}
+.page {
+  min-height: 100%;
+  background: #2C3E50;
+  /* fallback for old browsers */
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-gradient(linear, left top, left bottom, from(#4CA1AF), to(#2C3E50));
+  background: linear-gradient(to bottom, #4CA1AF, #2C3E50);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-repeat: no-repeat;
 }

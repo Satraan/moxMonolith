@@ -21,7 +21,7 @@
 
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div class="page page--search">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -33,6 +33,12 @@
                 </div>
             @endif
 
+            <div class="ui three item menu">
+                <a href="/"class="active item">Search for cards</a>
+                <a href="/list" class="item">View Wishlist</a>
+                <a href="/stock" class="item">View Stock</a>
+            </div>
+
             <div class="ui container">
                 <div class="ui two column grid">
                     <div class="ui two wide column">
@@ -42,6 +48,7 @@
                             <button id="scrapeSadRobot" type="submit" class="ui grey button">Search SadRobot</button>
                             <button id="scrapeAll" type="submit" class="ui teal button">Search All</button>
                             <button id="addToWishlist" type="submit" class="ui teal button">Add to Wishlist</button>
+                            <a href="/list" class="ui teal button">View Wishlist</a>
                         </div>
 
                     </div>
