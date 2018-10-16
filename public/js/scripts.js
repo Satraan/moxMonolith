@@ -28,20 +28,14 @@ function renderCard(card){
 function init(){
 
     function doScrape(target, query, value){
-        $.ajax({
+       return $.ajax({
             url: 'api/scrape' + target,
             type: 'GET',
             data: {query: query, value:value},
             error: function() {
             },
             success: function(data) {
-                $("#ajaxResult").removeClass('hidden');
-                $("#spinner").addClass('hidden');
-
-                $("#ajaxResult").append(
-                    "<p>"+ data + "</p>"
-                );
-                console.log(data);
+                return data;
             }
         });
     }
@@ -63,22 +57,46 @@ function init(){
         },
         load: function(query, callback) {
             if (!query.length) return callback();
+
             $.ajax({
-                url: 'https://api.scryfall.com/cards/search?q="' + encodeURIComponent(query) + '"',
+                url: 'https://api.scryfall.com/cards/search?unique=prints&q="' + encodeURIComponent(query) + '"',
                 type: 'GET',
                 dataType: 'json',
                 error: function() {
                     callback();
                 },
                 success: function(res) {
+                    var result = [];
+
+                    $.each(res, function (key, value) {
+                        
+
+                       console.log(this);
+                    });
+
+
+
                     var data = res.data.slice(0,5);
-                    //data.push({"name":"Refine your search for more options", "image_uris": {"art_crop":"https://m.media-amazon.com/images/I/A19stAC0VZL._CLa%7C2140,2000%7C61Zk3HEMGTL.png%7C0,0,2140,2000+648.0,529.0,809.0,971.0._UX679_.png"}, "id":"Nope"});
+
+
+
                     console.log(data);
                     callback(data);
                 }
             });
         }
     });
+
+    function removeA(arr) {
+        var what, a = arguments, L = a.length, ax;
+        while (L > 1 && arr.length) {
+            what = a[--L];
+            while ((ax= arr.indexOf(what)) !== -1) {
+                arr.splice(ax, 1);
+            }
+        }
+        return arr;
+    }
 
     $( '#select-card').on( "change", function() {
         event.preventDefault();
@@ -188,6 +206,16 @@ function init(){
         var target = 'SadRobot';
         doScrape(target, query);
     });
+    $( '#scrapeUnderworldConnections').on( "click", function() {
+        event.preventDefault();
+        $("#ajaxResult").html("").addClass('hidden');
+        $("#spinner").removeClass('hidden');
+        $("#results").removeClass('hidden');
+        var e = document.getElementById("select-card");
+        var query = e.options[e.selectedIndex].text;
+        var target = 'UnderworldConnections';
+        doScrape(target, query);
+    });
     $( '#scrapeGeekhome').on( "click", function() {
         event.preventDefault();
         $("#ajaxResult").html("").addClass('hidden');
@@ -200,6 +228,7 @@ function init(){
 
         doScrape(target, query, value);
     });
+
     $( '#scrapeAll').on( "click", function() {
         event.preventDefault();
         $("#ajaxResult").html("").addClass('hidden');
@@ -209,12 +238,28 @@ function init(){
         var e = document.getElementById("select-card");
         var query = e.options[e.selectedIndex].text;
 
-        var retailers = ['TopDeck' , 'SadRobot' , 'Geekhome'];
+        var retailers = ['TopDeck' , 'SadRobot' , 'Geekhome' , 'UnderworldConnections'];
 
         $.each(retailers, function(index, value){
             console.log(value);
             doScrape(value, query);
         });
+
+        $.when(doScrape('TopDeck' , query), doScrape('SadRobot' , query), doScrape('Geekhome' , query), doScrape('UnderworldConnections' , query)).done(function(res1, res2, res3, res4){
+
+            $("#ajaxResult").removeClass('hidden');
+            $("#spinner").addClass('hidden');
+
+            $("#ajaxResult").append(
+                "<p>"+ res1[0] + "</p>" +
+                "<p>"+ res2[0] + "</p>" +
+                "<p>"+ res3[0] + "</p>" +
+                "<p>"+ res4[0] + "</p>"
+            );
+
+        });
+
+
     });
 
     $('#addToWishlist').on("click" , function () {
@@ -241,6 +286,8 @@ function init(){
 $(document).ready(function () {
     console.log("document ready!");
     init();
+
+    var counter = 0;
 
     // getOracleText();
 });

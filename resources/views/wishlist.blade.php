@@ -46,6 +46,7 @@
                             <button id="scrapeTopDeck" type="submit" class="ui grey button">Search TopDeck</button>
                             <button id="scrapeGeekhome" type="submit" class="ui grey button">Search Geekhome</button>
                             <button id="scrapeSadRobot" type="submit" class="ui grey button">Search SadRobot</button>
+                            <button id="scrapeUnderworldConnections" type="submit" class="ui grey button">Search Underworld Connections</button>
                             <button id="scrapeAll" type="submit" class="ui teal button">Search All</button>
                             <button id="addToWishlist" type="submit" class="ui teal button">Add to Wishlist</button>
                             <a href="/list" class="ui teal button">View Wishlist</a>

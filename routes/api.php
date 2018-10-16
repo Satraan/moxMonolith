@@ -28,6 +28,7 @@ Route::get('/addToWishlist', 'TestController@add');
 Route::get('/scrapeTopDeck', 'ScrapingController@scrapeTopDeck');
 Route::get('/scrapeDracoti', 'ScrapingController@scrapeDracoti');
 Route::get('/scrapeSadRobot', 'ScrapingController@scrapeSadRobot');
+Route::get('/scrapeUnderworldConnections', 'ScrapingController@scrapeUnderworldConnections');
 Route::get('/scrapeGeekhome', 'ScrapingController@scrapeGeekhome');
 //Route::get('/scrapeAll', 'ScrapingController@scrapeAll');
 

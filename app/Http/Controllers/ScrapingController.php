@@ -89,6 +89,10 @@ class ScrapingController extends BaseController
         $url = "https://sadrobot.co.za/shop/" . $q;
         $crawler = $client->request('GET', $url);
 
+        if($client->getResponse()->getStatus()){
+            return "Sad Robot does not have stock.";
+        }
+
         $crawler->filter('p.out-of-stock')->each(function ($node) use (&$result){
             $result = $node->text();
         });
@@ -103,6 +107,50 @@ class ScrapingController extends BaseController
         });
 
         $result = "SadRobot has " . $stock . " " . $q . " in stock for " . $price;
+        return $result;
+    }
+    public function scrapeUnderworldConnections(Request $request)
+    {
+        $result = "";
+        $isFoil= "";
+        $stock = 0;
+        $price= "";
+        $q = $request->get('query');
+
+        $q = (string)$q;
+        $q=preg_replace('/\s+/', '-', $q);
+
+        $client = new Client();
+
+        $url = "https://underworldconnections.com/product/" . $q;
+        $crawler = $client->request('GET', $url);
+
+        if($client->getResponse()->getStatus()){
+            return "Underworld Connections does not have stock.";
+        }
+
+        $finalUrl = $crawler->getUri();
+        if (strpos($finalUrl, '-foil') !== false) {
+            $isFoil = " and it is foil.";
+        }
+
+        $crawler->filter('p.out-of-stock')->each(function ($node) use (&$result){
+            $result = $node->text();
+        });
+
+        if (!empty($result)){
+            return "Underworld Connections does not have stock.";
+        }
+
+        if (!$result){
+            $crawler->filter('p.price > .amount')->each(function ($node) use (&$price, &$stock){
+                $price = $node->text() . " ";
+                $stock++;
+            });
+
+            $result = "Underworld Connections has " . $stock . " " . $q . " in stock for " . $price . $isFoil;
+        }
+
         return $result;
     }
     public function scrapeGeekhome(Request $request)
