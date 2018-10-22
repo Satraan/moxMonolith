@@ -48,3 +48,6 @@ body {
 .hidden {
   display: none!important;
 }
+.img-icon:hover {
+  color: red;
+}

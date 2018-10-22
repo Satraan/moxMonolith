@@ -1,5 +1,6 @@
 <?php
 
+use App\Role;
 use Illuminate\Database\Seeder;
 use App\User;
 use Illuminate\Support\Facades\Hash;
@@ -13,15 +14,23 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            "name" => "John",
-            "email" => "john.roux1@gmail.com",
-            "password" => Hash::make("password")
-        ]);
-        User::create([
-            "name" => "Mandia",
-            "email" => "mandiasamuels@gmail.com",
-            "password" => Hash::make("cutie")
-        ]);
+
+        $role_admin = Role::where('name', 'admin')->first();
+        $role_user  = Role::where('name', 'user')->first();
+
+        $admin = new User();
+        $admin->name = 'Mandia';
+        $admin->email = 'mandiasamuels@gmail.com';
+        $admin->password = bcrypt('secret');
+        $admin->save();
+        $admin->roles()->attach($role_admin);
+
+        $user = new User();
+        $user->name = 'John';
+        $user->email = 'john.roux1@gmail.com';
+        $user->password = bcrypt('secret');
+        $user->save();
+        $user->roles()->attach($role_user);
+
     }
 }

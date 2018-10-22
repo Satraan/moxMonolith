@@ -51,29 +51,34 @@ class ScrapingController extends BaseController
     }
     public function scrapeDracoti(Request $request)
     {
-        $stock = 0;
+
+        $stock = "";
         $price= "";
         $q = $request->get('query');
 
         $q = (string)$q;
-        $q=preg_replace('/\s+/', '+', $q);
+        $q=preg_replace('/\s+/', '-', $q);
 
-        $client = new Client();https://dracoti.co.za/wc-api/wc_ps_legacy_api/?action=get_results&q=island&cat_in=all&search_in=product&ps_lang=&psp=1
-        $url = "https://store.topdecksa.co.za/search?q=" . $q;
+        $client = new Client();https:
+        $url = "https://shop.dracoti.co.za/product/" . $q;
         $crawler = $client->request('GET', $url);
 
-        $crawler->filter('div.grid-item.small--one-whole.text-center > div')->
+        $crawler->filter('div.instock.purchasable > .entry-summary')->
         each(function ($node) use (&$price, &$stock) {
-            $node->filter("span.product-item__price")->
+            $node->filter("p.price > .amount")->
             each(function($node) use (&$price, &$stock){
-                $price = $price . "||" . $node->html();
-                $stock++;
+                $price = $price . $node->text();
+            });
+            $node->filter("p.in-stock")->
+            each(function($node) use (&$stock){
+                $stock = $node->text();
             });
         });
 
         $price=preg_replace('/\s+/', '', $price);
 
-        return "Query: " . $q . ", Stock: " . $stock . ", Price: " . $price;
+        $result = "Dracoti has " . $stock . " for " . $price;
+        return $result;
     }
     public function scrapeSadRobot(Request $request)
     {

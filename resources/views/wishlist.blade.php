@@ -22,21 +22,20 @@
     </head>
     <body>
         <div class="page page--search">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
 
-            <div class="ui three item menu">
+
+            <div class="ui five item menu">
                 <a href="/"class="active item">Search for cards</a>
                 <a href="/list" class="item">View Wishlist</a>
                 <a href="/stock" class="item">View Stock</a>
+                @if (Route::has('login'))
+                    @auth
+                    <a href="{{ url('/') }}" class="item">Home</a>
+                    @else
+                    <a href="{{ route('login') }}" class="item">Login</a>
+                    <a href="{{ route('register') }}" class="item">Register</a>
+                    @endauth
+                @endif
             </div>
 
             <div class="ui container">
@@ -46,6 +45,7 @@
                             <button id="scrapeTopDeck" type="submit" class="ui grey button">Search TopDeck</button>
                             <button id="scrapeGeekhome" type="submit" class="ui grey button">Search Geekhome</button>
                             <button id="scrapeSadRobot" type="submit" class="ui grey button">Search SadRobot</button>
+                            <button id="scrapeDracoti" type="submit" class="ui grey button">Search Dracoti</button>
                             <button id="scrapeUnderworldConnections" type="submit" class="ui grey button">Search Underworld Connections</button>
                             <button id="scrapeAll" type="submit" class="ui teal button">Search All</button>
                             <button id="addToWishlist" type="submit" class="ui teal button">Add to Wishlist</button>
@@ -73,7 +73,7 @@
                         </table>
 
                         <div id="spinner" class="loader hidden">
-                            <img src="/svg/spinner.gif"/>
+<!--                            <img src="/svg/spinner.gif"/>-->
                         </div>
 
                         <div id="ajaxResult" class="ui segment hidden">

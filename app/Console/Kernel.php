@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Card;
+use App\Wishlist;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +26,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->call(function () {
+            $card = Card::where('id', '=', 2)->first();
+            $wishlistId = 1;
+            $wishlist = Wishlist::findOrFail($wishlistId);
+            //Adds the card to the wishlist
+            $wishlist->cards()->attach([$card->id]);
+            echo "job run";
+        })->everyMinute();
+
     }
 
     /**

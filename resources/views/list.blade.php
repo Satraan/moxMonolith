@@ -15,6 +15,7 @@
         <link href="/css/style.css" rel="stylesheet" type="text/css">
         <script src="/js/app.js" rel="script"></script>
         <script src="/js/scripts.js" rel="script"></script>
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
         <script type="text/javascript" src="/js/selectize.js"></script>
         <link rel="stylesheet" type="text/css" href="/css/selectize.css" />
 
@@ -22,22 +23,19 @@
     </head>
     <body>
             <div class="page page--wishlist">
-            @if (Route::has('login'))
-                <div class="top-right links">
+                <div class="ui five item menu">
+                    <a href="/"class="active item">Search for cards</a>
+                    <a href="/list" class="item">View Wishlist</a>
+                    <a href="/stock" class="item">View Stock</a>
+                    @if (Route::has('login'))
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                    <a href="{{ url('/') }}" class="item">Home</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
+                    <a href="{{ route('login') }}" class="item">Login</a>
+                    <a href="{{ route('register') }}" class="item">Register</a>
                     @endauth
+                    @endif
                 </div>
-            @endif
-
-            <div class="ui three item menu">
-                <a href="/"class="item">Search for cards</a>
-                <a href="/list" class="active item">View Wishlist</a>
-                <a href="/stock" class="item">View Stock</a>
-            </div>
 
             <div class="ui container">
                 <table class="ui celled table">
@@ -53,7 +51,9 @@
                     @foreach ($cards as $card)
                     <tr>
                         <td class="center aligned">
-                            <a href="{{ URL('/deleteCard/'.$card->id )}}" class="ui compact red button">Delete</a>
+                            <a href="{{ URL('/deleteCard/'.$card->id )}}">
+                                <i data-feather="trash-2"></i>
+                            </a>
                             </td>
                         <td class="center aligned">{{$card -> name}}</td>
                         <td class="eleven wide">{{$card -> oracle_text}}</td>
@@ -65,4 +65,7 @@
             </div>
             </div>
     </body>
+    <script>
+        feather.replace();
+    </script>
 </html>

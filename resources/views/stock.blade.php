@@ -22,21 +22,18 @@
     </head>
     <body>
         <div class="page page--stock">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
-
-            <div class="ui three item menu">
-                <a href="/"class="item">Search for cards</a>
+            <div class="ui five item menu">
+                <a href="/"class="active item">Search for cards</a>
                 <a href="/list" class="item">View Wishlist</a>
-                <a href="/stock" class="active item">View Stock</a>
+                <a href="/stock" class="item">View Stock</a>
+                @if (Route::has('login'))
+                @auth
+                <a href="{{ url('/') }}" class="item">Home</a>
+                @else
+                <a href="{{ route('login') }}" class="item">Login</a>
+                <a href="{{ route('register') }}" class="item">Register</a>
+                @endauth
+                @endif
             </div>
 
             <div class="ui container">

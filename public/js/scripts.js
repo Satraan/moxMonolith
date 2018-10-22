@@ -35,6 +35,13 @@ function init(){
             error: function() {
             },
             success: function(data) {
+                // return data;
+                $("#ajaxResult").append(
+                    "<p>"+ data + "</p>"
+                );
+
+                $("#ajaxResult").removeClass('hidden');
+                $("#spinner").addClass('hidden');
                 return data;
             }
         });
@@ -69,7 +76,7 @@ function init(){
                     var result = [];
 
                     $.each(res, function (key, value) {
-                        
+
 
                        console.log(this);
                     });
@@ -86,18 +93,6 @@ function init(){
             });
         }
     });
-
-    function removeA(arr) {
-        var what, a = arguments, L = a.length, ax;
-        while (L > 1 && arr.length) {
-            what = a[--L];
-            while ((ax= arr.indexOf(what)) !== -1) {
-                arr.splice(ax, 1);
-            }
-        }
-        return arr;
-    }
-
     $( '#select-card').on( "change", function() {
         event.preventDefault();
         var e = document.getElementById("select-card");
@@ -196,6 +191,19 @@ function init(){
         //     }
         // });
     });
+    $( '#scrapeDracoti').on( "click", function() {
+        event.preventDefault();
+        $("#ajaxResult").html("").addClass('hidden');
+        $("#spinner").removeClass('hidden');
+        $("#results").removeClass('hidden');
+        var e = document.getElementById("select-card");
+        var query = e.options[e.selectedIndex].text;
+        var target = 'Dracoti';
+        doScrape(target, query);
+
+
+    });
+
     $( '#scrapeSadRobot').on( "click", function() {
         event.preventDefault();
         $("#ajaxResult").html("").addClass('hidden');

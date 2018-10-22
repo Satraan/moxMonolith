@@ -20,3 +20,4 @@ mix.styles([
     'public/css/semantic.min.css'
 ], 'public/css/app.css');
 
+var feather = require('feather-icons');

@@ -24,3 +24,7 @@ Route::get('/list', 'WishlistController@list');
 Route::get('/deleteCard/{card}', 'WishlistController@removeFromWishlist');
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
