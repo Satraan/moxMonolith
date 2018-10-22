@@ -28,6 +28,7 @@ body {
   border-top-left-radius: .28571429rem;
   border-top-right-radius: .28571429rem;
 }
+#app,
 .page {
   min-height: 100%;
   background: #2C3E50;
@@ -50,4 +51,7 @@ body {
 }
 .img-icon:hover {
   color: red;
+}
+.page--login .card {
+  padding: 1em 2em;
 }

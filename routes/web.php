@@ -21,6 +21,8 @@ Route::get('/stock', 'TestController@stock');
 
 Route::get('/list', 'WishlistController@list');
 
+Route::get('/logout', 'HomeController@logout');
+
 Route::get('/deleteCard/{card}', 'WishlistController@removeFromWishlist');
 
 

@@ -21,6 +21,8 @@
 
     </head>
     <body>
+
+
         <div class="page page--search">
 
 
@@ -30,7 +32,7 @@
                 <a href="/stock" class="item">View Stock</a>
                 @if (Route::has('login'))
                     @auth
-                    <a href="{{ url('/') }}" class="item">Home</a>
+                    <a href="/logout" class="item">Log Out</a>
                     @else
                     <a href="{{ route('login') }}" class="item">Login</a>
                     <a href="{{ route('register') }}" class="item">Register</a>
