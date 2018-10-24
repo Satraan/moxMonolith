@@ -20,13 +20,14 @@ Route::get('/', function () {
 
 Route::get('/stock', 'TestController@stock');
 
-Route::get('/list', 'WishlistController@list');
+
 
 Route::get('/logout', 'HomeController@logout');
 
+//Wishlist
+Route::get('/createWishlist', 'WishlistController@createWishlist');
 Route::get('/deleteCard/{card}', 'WishlistController@removeFromWishlist');
-
-
+Route::get('/deleteWishlist/{wishlist}', 'WishlistController@deleteWishlist');
 
 Auth::routes();
 
@@ -34,7 +35,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //User Pages
 Route::get('/user/dashboard', function () {return view('/user/dashboard');});
-Route::get('/user/wishlist', function () {return view('/user/wishlist');});
+
 Route::get('/user/alerts', function () {return view('/user/alerts');});
 Route::get('/user/settings', function () {
     return view('/user/settings');});
+
+Route::get('/user/wishlist/', 'WishlistController@list');

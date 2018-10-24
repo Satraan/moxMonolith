@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCardWishlistTable extends Migration
+class CreateUserWishlistTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateCardWishlistTable extends Migration
      */
     public function up()
     {
-        Schema::create('card_wishlist', function (Blueprint $table) {
+        Schema::create('user_wishlist', function (Blueprint $table) {
 
-            $table->uuid('card_id');
+            $table->uuid('user_id');
             $table->uuid('wishlist_id')->primary();
 
         });
@@ -28,6 +28,6 @@ class CreateCardWishlistTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('card_wishlist');
+        Schema::dropIfExists('user_wishlist');
     }
 }

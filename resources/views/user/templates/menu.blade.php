@@ -3,7 +3,7 @@
     <a href="/user/dashboard" class="{{ Request::is('*/dashboard') ? 'active' : '' }} item">
         Dashboard
     </a>
-    <a href="/user/wishlist" class="{{ Request::is('*/wishlist') ? 'active' : '' }} item">
+    <a href="/user/wishlist" class="{{ Request::is('*/wishlist/*') ? 'active' : '' }} item">
         My Wishlists
     </a>
     <a href="/user/alerts" class="{{ Request::is('*/alerts') ? 'active' : '' }} item">

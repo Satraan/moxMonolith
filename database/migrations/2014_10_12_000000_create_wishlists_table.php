@@ -15,7 +15,7 @@ class CreateWishlistsTable extends Migration
     {
         Schema::create('wishlists', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('user_name');
+            $table->string('user_name');
         });
     }
 
@@ -26,6 +26,6 @@ class CreateWishlistsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wishlist');
+        Schema::dropIfExists('wishlists');
     }
 }
