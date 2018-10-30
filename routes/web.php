@@ -19,8 +19,9 @@ Route::get('/', function () {
 
 
 Route::get('/stock', 'TestController@stock');
-
-
+Route::get('/email', function () {
+    return view('email');
+});
 
 Route::get('/logout', 'HomeController@logout');
 
