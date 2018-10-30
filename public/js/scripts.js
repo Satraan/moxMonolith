@@ -198,8 +198,9 @@ function init(){
         $("#results").removeClass('hidden');
         var e = document.getElementById("select-card");
         var query = e.options[e.selectedIndex].text;
+        var value = e.options[e.selectedIndex].value;
         var target = 'Dracoti';
-        doScrape(target, query);
+        doScrape(target, query, value);
 
 
     });
@@ -211,8 +212,9 @@ function init(){
         $("#results").removeClass('hidden');
         var e = document.getElementById("select-card");
         var query = e.options[e.selectedIndex].text;
+        var value = e.options[e.selectedIndex].value;
         var target = 'SadRobot';
-        doScrape(target, query);
+        doScrape(target, query, value);
     });
     $( '#scrapeUnderworldConnections').on( "click", function() {
         event.preventDefault();
@@ -221,8 +223,9 @@ function init(){
         $("#results").removeClass('hidden');
         var e = document.getElementById("select-card");
         var query = e.options[e.selectedIndex].text;
+        var value = e.options[e.selectedIndex].value;
         var target = 'UnderworldConnections';
-        doScrape(target, query);
+        doScrape(target, query, value);
     });
     $( '#scrapeGeekhome').on( "click", function() {
         event.preventDefault();
@@ -268,6 +271,20 @@ function init(){
         });
 
 
+    });
+
+    $('#checkStock').on("click" , function () {
+        event.preventDefault();
+
+        $.ajax({
+            url: 'api/checkStock',
+            type: 'GET',
+            error: function() {
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        });
     });
 
     $('#addToWishlist').on("click" , function () {

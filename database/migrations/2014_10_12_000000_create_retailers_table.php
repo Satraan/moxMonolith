@@ -18,6 +18,7 @@ class CreateRetailersTable extends Migration
             $table->string('name');
             $table->string('website');
             $table->string('query_key');
+            $table->string('query_url');
         });
     }
 

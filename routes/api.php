@@ -21,7 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/addToWishlist', 'TestController@add');
+Route::get('/addToWishlist', 'WishlistController@addToWishlist');
+Route::get('/checkStock', 'WishlistController@checkAllStock');
 
 
 
