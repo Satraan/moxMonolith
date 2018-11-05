@@ -55,3 +55,6 @@ body {
 .page--login .card {
   padding: 1em 2em;
 }
+.page--search .stackable.grid .ui.three.wide.column {
+  padding-top: 0;
+}

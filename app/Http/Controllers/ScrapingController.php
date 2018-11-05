@@ -76,6 +76,10 @@ class ScrapingController extends BaseController
 
         $price=preg_replace('/\s+/', '', $price);
 
+        if (empty($stock)){
+            return "Dracoti does not have stock.";
+        }
+
         $result = "Dracoti has " . $stock . " for " . $price;
         return $result;
     }
@@ -118,11 +122,16 @@ class ScrapingController extends BaseController
         $price=preg_replace('/R/', '', $price);
         $price = (float)$price;
 
+        if ($stock == 0){
+            return "SadRobot does not have stock.";
+        }
+
         $card = DB::table('cards')->where('scryfall_id' , '=', $value)->first();
         $cardId = $card->id;
         $this->addProduct($cardId,$retailer,$price);
 
-        $result = "SadRobot has " . $stock . " " . $q . " in stock for " . $price;
+        $q=preg_replace('/-/', ' ', $q);
+        $result = "SadRobot has " . $stock . " " . $q . " in stock for R" . $price;
         return $result;
     }
     public function scrapeUnderworldConnections(Request $request)
@@ -163,11 +172,13 @@ class ScrapingController extends BaseController
                 $price = $node->text() . " ";
                 $stock++;
             });
-
-
-            $result = "Underworld Connections has " . $stock . " " . $q . " in stock for " . $price . $isFoil;
         }
 
+        if ($stock == 0){
+            return "Underworld Connections does not have stock.";
+        }
+
+        $result = "Underworld Connections has " . $stock . " " . $q . " in stock for " . $price . $isFoil;
         return $result;
     }
     public function scrapeGeekhome(Request $request)
@@ -177,6 +188,7 @@ class ScrapingController extends BaseController
         $price= "";
         $client = new Client();
         $retailer = 1;
+        $outOfStock = "";
 
         $q = $request->get('query');
         $q = (string)$q;
@@ -185,6 +197,14 @@ class ScrapingController extends BaseController
         $url = "https://www.geekhome.co.za/product/" . $q;
 
         $crawler = $client->request('GET', $url);
+
+
+        $crawler->filter('p.stock.out-of-stock')->each(function ($node) use (&$outOfStock){
+           $outOfStock =  $node->text();
+        });
+        if (!empty ($outOfStock)){
+            return "Geekhome does not have stock.";
+        }
 
         $crawler->filter('div.product_cat-mtg-singles > div.entry-summary > p.price > span.woocommerce-Price-amount')->each(function ($node) use (&$price, &$stock){
             $price = $node->text();
@@ -206,7 +226,7 @@ class ScrapingController extends BaseController
 
             $this->addProduct($cardId,$retailer,$price);
 
-            $result = "Geekhome has " . $stock . " " . $q . " in stock for " . $price;
+            $result = "Geekhome has " . $stock . " " . $q . " in stock for R" . $price;
             return $result;
         }
 

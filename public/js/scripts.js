@@ -7,7 +7,7 @@ function renderCard(card){
     var table = document.getElementById("results");
     var row = table.insertRow(1);
 
-    var localPrice = card.usd*14.5;
+    var localPrice = card.usd*14.75;
     localPrice = Math.ceil(localPrice);
 
     row.innerHTML =
@@ -35,6 +35,18 @@ function init(){
             error: function() {
             },
             success: function(data) {
+                return data;
+            }
+        });
+    }
+    function singleScrape(target, query, value){
+       return $.ajax({
+            url: 'api/scrape' + target,
+            type: 'GET',
+            data: {query: query, value:value},
+            error: function() {
+            },
+            success: function(data) {
                 // return data;
                 $("#ajaxResult").append(
                     "<p>"+ data + "</p>"
@@ -46,6 +58,7 @@ function init(){
             }
         });
     }
+
 
 
     $('#select-card').selectize({
@@ -66,7 +79,7 @@ function init(){
             if (!query.length) return callback();
 
             $.ajax({
-                url: 'https://api.scryfall.com/cards/search?unique=prints&q="' + encodeURIComponent(query) + '"',
+                url: 'https://api.scryfall.com/cards/search?q="' + encodeURIComponent(query) + '"',
                 type: 'GET',
                 dataType: 'json',
                 error: function() {
@@ -129,67 +142,10 @@ function init(){
         $("#spinner").removeClass('hidden');
         $("#results").removeClass('hidden');
         var e = document.getElementById("select-card");
-        var value = e.options[e.selectedIndex].text;
-
-        //Test scrape
-        $.ajax({
-            url: 'api/scrapeTopDeck',
-            type: 'GET',
-            data: {query: value},
-            error: function() {
-            },
-            success: function(data) {
-                $("#ajaxResult").append(
-                    "<p>" + data + "</p>"
-                );
-                console.log(data);
-            }
-        });
-
-        //Test adding cards
-        // $.ajax({
-        //     url: 'https://api.scryfall.com/cards/' + value ,
-        //     type: 'GET',
-        //     dataType: 'json',
-        //     error: function() {
-        //         // callback();
-        //     },
-        //     success: function(data) {
-        //         $.ajax({
-        //             url: 'api/addToWishlist',
-        //             type: 'GET',
-        //             data: data,
-        //             error: function() {
-        //             },
-        //             success: function(data) {
-        //                 console.log(data);
-        //             }
-        //         });
-        //     }
-        // });
-
-
-
-        // $.ajax({
-        //     url: 'https://api.scryfall.com/cards/' + value ,
-        //     type: 'GET',
-        //     dataType: 'json',
-        //     error: function() {
-        //     },
-        //     success: function(data) {
-        //         //Submit card for wishlist
-        //         $.ajax({
-        //             url: 'addToWishlist' ,
-        //             type: 'GET',
-        //             data: data,
-        //             error: function() {
-        //             },
-        //             success: function(data) {
-        //
-        //             }
-        //         });
-        //     }
-        // });
+        var query = e.options[e.selectedIndex].text;
+        var value = e.options[e.selectedIndex].value;
+        var target = 'TopDeck';
+        singleScrape(target, query, value);
     });
     $( '#scrapeDracoti').on( "click", function() {
         event.preventDefault();
@@ -200,7 +156,7 @@ function init(){
         var query = e.options[e.selectedIndex].text;
         var value = e.options[e.selectedIndex].value;
         var target = 'Dracoti';
-        doScrape(target, query, value);
+        singleScrape(target, query, value);
 
 
     });
@@ -214,7 +170,7 @@ function init(){
         var query = e.options[e.selectedIndex].text;
         var value = e.options[e.selectedIndex].value;
         var target = 'SadRobot';
-        doScrape(target, query, value);
+        singleScrape(target, query, value);
     });
     $( '#scrapeUnderworldConnections').on( "click", function() {
         event.preventDefault();
@@ -225,7 +181,7 @@ function init(){
         var query = e.options[e.selectedIndex].text;
         var value = e.options[e.selectedIndex].value;
         var target = 'UnderworldConnections';
-        doScrape(target, query, value);
+        singleScrape(target, query, value);
     });
     $( '#scrapeGeekhome').on( "click", function() {
         event.preventDefault();
@@ -237,7 +193,7 @@ function init(){
         var value = e.options[e.selectedIndex].value;
         var target = 'Geekhome';
 
-        doScrape(target, query, value);
+        singleScrape(target, query, value);
     });
 
     $( '#scrapeAll').on( "click", function() {
@@ -248,15 +204,14 @@ function init(){
 
         var e = document.getElementById("select-card");
         var query = e.options[e.selectedIndex].text;
+        var value = e.options[e.selectedIndex].value;
 
-        var retailers = ['TopDeck' , 'SadRobot' , 'Geekhome' , 'UnderworldConnections'];
+        // $.each(retailers, function(index, value){
+        //     console.log(value);
+        //     doScrape(value, query);
+        // });
 
-        $.each(retailers, function(index, value){
-            console.log(value);
-            doScrape(value, query);
-        });
-
-        $.when(doScrape('TopDeck' , query), doScrape('SadRobot' , query), doScrape('Geekhome' , query), doScrape('UnderworldConnections' , query)).done(function(res1, res2, res3, res4){
+        $.when(doScrape('TopDeck' , query, value), doScrape('SadRobot' , query, value), doScrape('Dracoti' , query, value), doScrape('Geekhome' , query, value), doScrape('UnderworldConnections' , query, value)).done(function(res1, res2, res3, res4, res5){
 
             $("#ajaxResult").removeClass('hidden');
             $("#spinner").addClass('hidden');
@@ -265,7 +220,8 @@ function init(){
                 "<p>"+ res1[0] + "</p>" +
                 "<p>"+ res2[0] + "</p>" +
                 "<p>"+ res3[0] + "</p>" +
-                "<p>"+ res4[0] + "</p>"
+                "<p>"+ res4[0] + "</p>" +
+                "<p>"+ res5[0] + "</p>"
             );
 
         });
@@ -304,7 +260,7 @@ function init(){
         });
     });
 
-
+    $('.ui.dropdown').dropdown();
 
 }
 

@@ -1,0 +1,34 @@
+@media all and (max-width: 768px) {
+  .page--search .stackable.grid .ui.mobile.dropdown {
+    display: inline-block !important;
+  }
+  .page--search .stackable.grid #results {
+    display: none;
+  }
+  .page--search .stackable.grid .ui.vertical.buttons {
+    display: none;
+  }
+  .page--search .stackable.grid .ui.twelve.wide.search-cards {
+    padding: 1em!important;
+  }
+  .page--search .stackable.grid .ui.three.wide.column .vertical.buttons {
+    width: 100%;
+  }
+  .page--search .stackable.grid .ui.three.wide.column .vertical.buttons .button {
+    border-radius: 0;
+  }
+}
+.page--search .stackable.grid .ui.mobile.dropdown {
+  display: none;
+  background-color: white;
+  width: 100%;
+  padding: 1.5em 0.5em;
+}
+.page--search .stackable.grid .ui.mobile.dropdown .menu {
+  width: 100%;
+  text-align: center;
+}
+.page--search .stackable.grid .ui.mobile.dropdown .menu .button {
+  border-radius: 0!important;
+  margin: 0!important;
+}
