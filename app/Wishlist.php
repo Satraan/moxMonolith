@@ -20,4 +20,7 @@ class Wishlist extends Model
     public function cards(){
         return $this->belongsToMany(Card::class);
     }
+    public function users(){
+        return $this->belongsToMany(User::class);
+    }
 }

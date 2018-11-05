@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use App\Wishlist;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -17,7 +18,7 @@ class ScrapingController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function scrapeTopDeck(Request $request)
+    public function scrapeTopDeck(Request $request, $param=null)
     {
         $result = "";
         $stock = 0;
@@ -38,8 +39,6 @@ class ScrapingController extends BaseController
                 $stock++;
             });
         });
-
-
 
         if ($stock == 0) {
             $result = "TopDeck does not have stock.";
@@ -77,16 +76,24 @@ class ScrapingController extends BaseController
 
         $price=preg_replace('/\s+/', '', $price);
 
+        if (empty($stock)){
+            return "Dracoti does not have stock.";
+        }
+
         $result = "Dracoti has " . $stock . " for " . $price;
         return $result;
     }
     public function scrapeSadRobot(Request $request)
     {
+        $price= "";
         $result = "";
         $stock = 0;
-        $price= "";
-        $q = $request->get('query');
+        $retailer = 2;
 
+        $value = $request->get('value');
+
+        //Format the query
+        $q = $request->get('query');
         $q = (string)$q;
         $q=preg_replace('/\s+/', '-', $q);
 
@@ -94,9 +101,10 @@ class ScrapingController extends BaseController
         $url = "https://sadrobot.co.za/shop/" . $q;
         $crawler = $client->request('GET', $url);
 
-        if($client->getResponse()->getStatus()){
-            return "Sad Robot does not have stock.";
-        }
+        //What is with this????
+//        if($client->getResponse()->getStatus()){
+//            return "Sad Robot does not have stock.";
+//        }
 
         $crawler->filter('p.out-of-stock')->each(function ($node) use (&$result){
             $result = $node->text();
@@ -111,7 +119,19 @@ class ScrapingController extends BaseController
             $stock++;
         });
 
-        $result = "SadRobot has " . $stock . " " . $q . " in stock for " . $price;
+        $price=preg_replace('/R/', '', $price);
+        $price = (float)$price;
+
+        if ($stock == 0){
+            return "SadRobot does not have stock.";
+        }
+
+        $card = DB::table('cards')->where('scryfall_id' , '=', $value)->first();
+        $cardId = $card->id;
+        $this->addProduct($cardId,$retailer,$price);
+
+        $q=preg_replace('/-/', ' ', $q);
+        $result = "SadRobot has " . $stock . " " . $q . " in stock for R" . $price;
         return $result;
     }
     public function scrapeUnderworldConnections(Request $request)
@@ -130,14 +150,14 @@ class ScrapingController extends BaseController
         $url = "https://underworldconnections.com/product/" . $q;
         $crawler = $client->request('GET', $url);
 
-        if($client->getResponse()->getStatus()){
-            return "Underworld Connections does not have stock.";
-        }
+//        if($client->getResponse()->getStatus()){
+//            return "Underworld Connections does not have stock.";
+//        }
 
-        $finalUrl = $crawler->getUri();
-        if (strpos($finalUrl, '-foil') !== false) {
-            $isFoil = " and it is foil.";
-        }
+//        $finalUrl = $crawler->getUri();
+//        if (strpos($finalUrl, '-foil') !== false) {
+//            $isFoil = " and it is foil.";
+//        }
 
         $crawler->filter('p.out-of-stock')->each(function ($node) use (&$result){
             $result = $node->text();
@@ -152,10 +172,13 @@ class ScrapingController extends BaseController
                 $price = $node->text() . " ";
                 $stock++;
             });
-
-            $result = "Underworld Connections has " . $stock . " " . $q . " in stock for " . $price . $isFoil;
         }
 
+        if ($stock == 0){
+            return "Underworld Connections does not have stock.";
+        }
+
+        $result = "Underworld Connections has " . $stock . " " . $q . " in stock for " . $price . $isFoil;
         return $result;
     }
     public function scrapeGeekhome(Request $request)
@@ -164,6 +187,8 @@ class ScrapingController extends BaseController
         $stock = 0;
         $price= "";
         $client = new Client();
+        $retailer = 1;
+        $outOfStock = "";
 
         $q = $request->get('query');
         $q = (string)$q;
@@ -172,6 +197,14 @@ class ScrapingController extends BaseController
         $url = "https://www.geekhome.co.za/product/" . $q;
 
         $crawler = $client->request('GET', $url);
+
+
+        $crawler->filter('p.stock.out-of-stock')->each(function ($node) use (&$outOfStock){
+           $outOfStock =  $node->text();
+        });
+        if (!empty ($outOfStock)){
+            return "Geekhome does not have stock.";
+        }
 
         $crawler->filter('div.product_cat-mtg-singles > div.entry-summary > p.price > span.woocommerce-Price-amount')->each(function ($node) use (&$price, &$stock){
             $price = $node->text();
@@ -189,14 +222,32 @@ class ScrapingController extends BaseController
         }
         else {
             $card = DB::table('cards')->where('scryfall_id' , '=', $value)->first();
-            DB::table('products')->insert(
-                ['card_id' => $card->id, 'retailer_id' => 1, 'price' => $price]
-            );
-            $result = "Geekhome has " . $stock . " " . $q . " in stock for " . $price;
+            $cardId = $card->id;
+
+            $this->addProduct($cardId,$retailer,$price);
+
+            $result = "Geekhome has " . $stock . " " . $q . " in stock for R" . $price;
             return $result;
         }
 
 
 
+    }
+
+
+
+
+
+    public function addProduct($card, $retailer, $price){
+
+        $product = Product::firstOrNew(array('card_id' => $card, 'retailer_id' => $retailer));
+
+        $product->card_id = $card;
+        $product->retailer_id = $retailer;
+        $product->price = $price;
+        $product->save();
+
+        //Redirects to list view
+        return redirect()->action('WishlistController@list');
     }
 }

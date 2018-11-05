@@ -15,6 +15,8 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
 
 mix.less('public/css/style.less', 'public/css');
+mix.less('public/css/mobile.less', 'public/css');
+mix.less('public/css/user.less', 'public/css/user.css');
 
 mix.styles([
     'public/css/semantic.min.css'

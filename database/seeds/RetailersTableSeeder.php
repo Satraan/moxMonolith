@@ -17,13 +17,15 @@ class RetailersTableSeeder extends Seeder
             'id' => 1,
             'name' => 'Geekhome',
             'website' => 'www.geekhome.com',
-            'query_key' => '+'
+            'query_key' => '+',
+            'query_url' => "https://sadrobot.co.za/shop/"
         ]);
         Retailer::create([
             'id' => 2,
             'name' => 'SadRobot',
             'website' => 'www.sadrobot.com',
-            'query_key' => '-'
+            'query_key' => '-',
+            'query_url' => "https://www.geekhome.co.za/product/"
         ]);
     }
 }

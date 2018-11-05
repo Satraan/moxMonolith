@@ -20,28 +20,41 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet" type="text/css">
     <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/css/user.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="/js/app.js" rel="script"></script>
-<!--    <script src="/js/scripts.js" rel="script"></script>-->
+    <!--    <script src="/js/scripts.js" rel="script"></script>-->
     <script type="text/javascript" src="/js/selectize.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/selectize.css" />
 </head>
 <body>
-    <div id="app">
-        <div class="ui four item menu">
-            <a href="/"class="active item">Search for cards</a>
-            <a href="/list" class="item">View Wishlist</a>
-            <a href="/stock" class="item">View Stock</a>
-            @if (Route::has('login'))
-            @auth
-            <a href="{{ url('/') }}" class="item">Home</a>
-            @else
-            <a href="{{ route('login') }}" class="item">Sign In</a>
-            @endauth
-            @endif
-        </div>
+<div id="app">
+    <div class="ui five item menu">
+        <a href="/"class="active item">Search for cards</a>
+        <a href="/list" class="item">View Wishlist</a>
+        <a href="/stock" class="item">View Stock</a>
+        @if (Route::has('login'))
+        @auth
+        <a href="/dashboard" class="item">Dashboard</a>
+        <a href="/logout" class="item">Log Out</a>
+        @else
+        <a href="{{ route('login') }}" class="item">Login</a>
+        @endauth
+        @endif
+    </div>
 
+    <div class="ui container">
+        <div class="ui grid">
+            @include('user.templates.menu')
 
             @yield('content')
+        </div>
     </div>
+
+
+</div>
 </body>
+<script>
+    feather.replace();
+</script>
 </html>

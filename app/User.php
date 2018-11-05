@@ -61,4 +61,8 @@ class User extends Authenticatable
     {
         return null !== $this->roles()->where('name', $role)->first();
     }
+
+    public function wishlists(){
+        return $this->belongsToMany(Wishlist::class);
+    }
 }

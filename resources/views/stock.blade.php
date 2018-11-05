@@ -42,7 +42,9 @@
                     <tr>
                         <th>Name</th>
                         <th>Desc</th>
-                        <th>Link</th>
+                        <th>
+                            <button id="checkStock" type="button">Check stock</button>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
