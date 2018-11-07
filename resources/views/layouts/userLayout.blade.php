@@ -10,22 +10,24 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="/js/app.js" rel="script"></script>
+    <script src="/js/scripts.js" rel="script"></script>
+    <script src="/js/user.js" rel="script"></script>
+    <script src="/js/semantic.min.js" rel="script"></script>
+    <script type="text/javascript" src="/js/selectize.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet" type="text/css">
     <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/css/mobile.css" rel="stylesheet" type="text/css">
+    <link href="/css/selectize.css" rel="stylesheet" type="text/css"/>
     <link href="/css/user.css" rel="stylesheet" type="text/css">
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="/js/app.js" rel="script"></script>
-    <!--    <script src="/js/scripts.js" rel="script"></script>-->
-    <script type="text/javascript" src="/js/selectize.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/selectize.css" />
+
 </head>
 <body>
 <div id="app">

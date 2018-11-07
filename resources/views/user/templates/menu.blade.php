@@ -1,4 +1,4 @@
-<div class="three wide column">
+<div class="four wide column">
 <div class="ui vertical pointing menu">
     <a href="/user/dashboard" class="{{ Request::is('*/dashboard') ? 'active' : '' }} item">
         Dashboard

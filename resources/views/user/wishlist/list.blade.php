@@ -7,11 +7,15 @@
                 <h3 class="ui left floated header">
                     My Wishlists
                 </h3>
-                <h3 class="ui right floated header">
-                    <a href="/createWishlist" class="add-wishlist">
-                        <i data-feather="plus-circle"></i>
-                    </a>
-                </h3>
+                <form action="/createWishlist" method="post" class="ui  form">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <div class="ui right floated action input">
+                        <input type="text" name="title" placeholder="Add wishlist">
+                        <button type="submit" class="ui button">
+                            <i data-feather="plus-circle"></i>
+                        </button>
+                    </div>
+                </form>
 
             </div>
             <div class="ui clearing divider"></div>
@@ -21,8 +25,7 @@
                         <thead>
                         <tr class="center aligned">
                             <th></th>
-                            <th>Id</th>
-                            <th>Name</th>
+                            <th>Title</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -33,12 +36,11 @@
                                     <i data-feather="trash-2"></i>
                                 </a>
                             </td>
-                            <td class="eleven wide">
+                            <td class="center aligned">
                                 <a href="{{ URL('/user/wishlist/view/'.$wishlist->id )}}">
-                                    {{$wishlist -> id}}
+                                    {{$wishlist -> title}}
                                 </a>
                             </td>
-                            <td class="center aligned">{{$wishlist -> user_name}}</td>
                         </tr>
                         @endforeach
                         </tbody>
@@ -54,5 +56,7 @@
 
         </div>
     </div>
-
+    <script>
+        feather.replace();
+    </script>
 @endsection

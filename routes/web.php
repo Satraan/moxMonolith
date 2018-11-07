@@ -26,10 +26,11 @@ Route::get('/email', function () {
 Route::get('/logout', 'HomeController@logout');
 
 //Wishlist
-Route::get('/createWishlist', 'WishlistController@createWishlist');
-Route::get('/deleteCard/{card}', 'WishlistController@removeFromWishlist');
+Route::post('/createWishlist', 'WishlistController@createWishlist');
+Route::get('/deleteCard/{wishlist}/{card}', 'WishlistController@removeFromWishlist');
 Route::get('/deleteWishlist/{wishlist}', 'WishlistController@deleteWishlist');
 Route::get('/user/wishlist/view/{wishlist}', 'WishlistController@view');
+Route::post('/addToWishlist', 'WishlistController@addToWishlist');
 
 Auth::routes();
 
