@@ -16,7 +16,7 @@ class CreateCardWishlistTable extends Migration
         Schema::create('card_wishlist', function (Blueprint $table) {
 
             $table->uuid('card_id');
-            $table->uuid('wishlist_id')->primary();
+            $table->uuid('wishlist_id');
 
         });
     }

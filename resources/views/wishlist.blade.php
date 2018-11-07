@@ -23,7 +23,22 @@
 
     </head>
     <body>
-        <div class="page page--search">
+    <div class="ui five item menu">
+        <a href="/"class="active item">Search for cards</a>
+        <a href="/list" class="item">View Wishlist</a>
+        <a href="/stock" class="item">View Stock</a>
+        @if (Route::has('login'))
+        @auth
+        <a href="/logout" class="item">Log Out</a>
+        @else
+        <a href="{{ route('login') }}" class="item">Login</a>
+        <a href="{{ route('register') }}" class="item">Register</a>
+        @endauth
+        @endif
+    </div>
+
+
+    <div class="page page--search">
             <div class="ui container">
                 <div class="ui two column stackable grid">
                     <div class="ui three wide column">

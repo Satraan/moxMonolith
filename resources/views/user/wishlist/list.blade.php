@@ -33,7 +33,11 @@
                                     <i data-feather="trash-2"></i>
                                 </a>
                             </td>
-                            <td class="eleven wide">{{$wishlist -> id}}</td>
+                            <td class="eleven wide">
+                                <a href="{{ URL('/user/wishlist/view/'.$wishlist->id )}}">
+                                    {{$wishlist -> id}}
+                                </a>
+                            </td>
                             <td class="center aligned">{{$wishlist -> user_name}}</td>
                         </tr>
                         @endforeach

@@ -29,6 +29,7 @@ Route::get('/logout', 'HomeController@logout');
 Route::get('/createWishlist', 'WishlistController@createWishlist');
 Route::get('/deleteCard/{card}', 'WishlistController@removeFromWishlist');
 Route::get('/deleteWishlist/{wishlist}', 'WishlistController@deleteWishlist');
+Route::get('/user/wishlist/view/{wishlist}', 'WishlistController@view');
 
 Auth::routes();
 

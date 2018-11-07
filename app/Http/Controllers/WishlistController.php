@@ -78,6 +78,14 @@ class WishlistController extends BaseController
         return view("user.wishlist.list",compact('wishlists'));
     }
 
+    //View an individual wishlist
+    public function view($wishlistId){
+        $cards = Card::whereHas('wishlists', function ($q) use($wishlistId){
+            $q->where('id', $wishlistId);
+        })->get();
+        return view("user.wishlist.view",compact('cards'));
+    }
+
 
     public function scrapeTopDeck($q, $value)
     {
