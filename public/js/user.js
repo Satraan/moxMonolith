@@ -1,3 +1,31 @@
+
+function viewWishlist() {
+
+    $('.js-update-wishlist').on("click", function () {
+        event.preventDefault();
+
+        var wishlistId = document.getElementById("wishlistId").value;
+        var title = document.getElementById("wishlistTitle").value;
+
+
+        $.ajax({
+            url: '../../../api/updateWishlist',
+            type: 'POST',
+            data: {title: title, wishlistId:wishlistId},
+            error: function () {
+            },
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    });
+}
+
+
+
+
+
+
 $(document).ready(function () {
 
     $('#addToWishlist').on("click", function () {
@@ -17,8 +45,6 @@ $(document).ready(function () {
         });
     });
 
-
-
-
+    viewWishlist();
 
 });

@@ -4,9 +4,17 @@
 <div class="twelve wide column">
     <div class="ui segment segment--wishlist">
         <div class="segment-header">
-            <h3 class="ui left floated header">
-                {{$wishlist -> title}}
-            </h3>
+            <div id="updateForm">
+                <form name="updateTitle" action="">
+                    <input type="hidden" name="wishlistId" id="wishlistId" value="{{ $wishlist -> id }}">
+                    <div class="ui transparent input">
+                        <input id="wishlistTitle" type="text" id="title" value="{{$wishlist -> title}}" onkeydown="if (event.keyCode == 13) return false">
+                        <button type="submit" class="ui basic primary icon button js-update-wishlist">
+                            <i data-feather="save"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
         <div class="ui clearing divider"></div>
         <div class="segment-content">
@@ -27,7 +35,6 @@
             <table class="ui celled table">
                 <thead>
                 <tr class="center aligned">
-                    <th>Id</th>
                     <th>Name</th>
                     <th>TCG Price</th>
                     <th></th>
@@ -36,8 +43,11 @@
                 <tbody>
                 @foreach ($cards as $card)
                 <tr>
-                    <td>{{$card -> id}}</td>
-                    <td class="center aligned">{{$card -> name}}</td>
+                    <td class="center aligned">
+                        <a href="{{$card -> scryfall_uri}}">
+                            {{$card -> name}}
+                        </a>
+                    </td>
                     <td class="center aligned">$ {{$card -> tcg_price}}</td>
                     <td class="center aligned">
                         <a href="/deleteCard/{{$wishlist -> id}}/{{$card->id}}">

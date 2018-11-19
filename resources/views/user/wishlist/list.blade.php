@@ -24,21 +24,21 @@
                     <table class="ui celled table">
                         <thead>
                         <tr class="center aligned">
-                            <th></th>
                             <th>Title</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($wishlists as $wishlist)
                         <tr>
                             <td class="center aligned">
-                                <a href="{{ URL('/deleteWishlist/'.$wishlist->id )}}">
-                                    <i data-feather="trash-2"></i>
+                                <a href="{{ URL('/user/wishlist/view/'.$wishlist->id )}}">
+                                    {{$wishlist -> title}}
                                 </a>
                             </td>
                             <td class="center aligned">
-                                <a href="{{ URL('/user/wishlist/view/'.$wishlist->id )}}">
-                                    {{$wishlist -> title}}
+                                <a href="{{ URL('/deleteWishlist/'.$wishlist->id )}}">
+                                    <i data-feather="trash-2"></i>
                                 </a>
                             </td>
                         </tr>
@@ -48,9 +48,6 @@
                 @else
                     You have not created any wishlists.
                 @endif
-
-
-
 
             </div>
 

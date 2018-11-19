@@ -42,6 +42,14 @@ class WishlistController extends BaseController
         //Redirects to list view
         return redirect()->action('WishlistController@list');
     }
+    //Update the wishlist title
+    public function updateWishlist(Request $request){
+
+        $wishlist = Wishlist::findOrFail($request->wishlistId);
+        $wishlist->title = $request->title;
+        $wishlist->save();
+
+    }
 
 
 
@@ -92,9 +100,11 @@ class WishlistController extends BaseController
     public function view($wishlistId){
         $wishlist = Wishlist::findOrFail($wishlistId);
 
+        //Find all the cards in this wishlist
         $cards = Card::whereHas('wishlists', function ($query) use($wishlistId){
             $query->where('id', $wishlistId);
         })->orderBy('tcg_price', 'desc')->get();
+
         return view("user.wishlist.view",compact('cards', 'wishlist'));
     }
 

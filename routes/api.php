@@ -22,6 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/addToWishlist', 'WishlistController@addToWishlist');
+Route::post('/updateWishlist', 'WishlistController@updateWishlist');
 Route::get('/checkStock', 'WishlistController@checkAllStock');
 Route::get('/getPrices', 'WishlistController@getPrices');
 

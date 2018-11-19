@@ -29,6 +29,7 @@
         <a href="/stock" class="item">View Stock</a>
         @if (Route::has('login'))
         @auth
+        <a href="/user/dashboard" class="item">Dashboard</a>
         <a href="/logout" class="item">Log Out</a>
         @else
         <a href="{{ route('login') }}" class="item">Login</a>
