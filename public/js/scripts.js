@@ -25,6 +25,10 @@ function renderCard(card){
 
 }
 
+
+
+
+
 function init(){
 
     function doScrape(target, query, value){
@@ -60,7 +64,6 @@ function init(){
     }
 
 
-
     $('#select-card').selectize({
         valueField: 'id',  //What attribute of the card will be recorded as the selected value. i.e name, id, set, oracle_id
         labelField: 'name',
@@ -77,9 +80,9 @@ function init(){
         },
         load: function(query, callback) {
             if (!query.length) return callback();
-
+            https://scryfall.com/search?q=reset+-e%3Amm2&unique=cards&as=grid&order=name
             $.ajax({
-                url: 'https://api.scryfall.com/cards/search?q="' + encodeURIComponent(query) + '"',
+                url: 'https://api.scryfall.com/cards/search?q=' + encodeURIComponent(query) + "+ -e:me1" + "+ -e:me2" + "+ -e:me3" + "+ -e:me4" + "+ -e:vma" + "+ -e:tpr" + "+ -e:pz1",
                 type: 'GET',
                 dataType: 'json',
                 error: function() {
@@ -106,6 +109,8 @@ function init(){
             });
         }
     });
+
+
     $( '#select-card').on( "change", function() {
         event.preventDefault();
         var e = document.getElementById("select-card");
@@ -243,22 +248,7 @@ function init(){
         });
     });
 
-    $('#addToWishlist').on("click" , function () {
-        event.preventDefault();
-        var e = document.getElementById("select-card");
-        var query = e.options[e.selectedIndex].value;
 
-        $.ajax({
-            url: 'api/addToWishlist',
-            type: 'GET',
-            data: {query:query},
-            error: function() {
-            },
-            success: function(data) {
-                console.log(data);
-            }
-        });
-    });
 
     $('.ui.dropdown').dropdown();
 

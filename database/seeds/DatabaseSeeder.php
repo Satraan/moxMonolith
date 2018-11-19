@@ -14,12 +14,12 @@ class DatabaseSeeder extends Seeder
 
 
          $this->call(CardTableSeeder::class);
-         $this->call(ProductsTableSeeder::class);
-         $this->call(RetailersTableSeeder::class);
-
-        // Role comes before User seeder here.
-        $this->call(RoleTableSeeder::class);
-        // User seeder will use the roles above created.
-        $this->call(UsersTableSeeder::class);
+//         $this->call(ProductsTableSeeder::class);
+//         $this->call(RetailersTableSeeder::class);
+//
+//        // Role comes before User seeder here.
+//        $this->call(RoleTableSeeder::class);
+//        // User seeder will use the roles above created.
+//        $this->call(UsersTableSeeder::class);
     }
 }

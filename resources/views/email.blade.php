@@ -2,7 +2,7 @@
 
 $email = new \SendGrid\Mail\Mail();
 $email->setFrom("mandiasamuels@gmail.com", "Example User");
-$email->setSubject("Sending with SendGrid is Fun");
+$email->setSubject("Mox Monolith says hi");
 $email->addTo("mandiasamuels@gmail.com", "Example User");
 $email->addContent("text/plain", "and easy to do anywhere, even with PHP");
 $email->addContent(

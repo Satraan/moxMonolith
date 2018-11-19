@@ -38,6 +38,8 @@ class CreateCardsTable extends Migration
             $table->json('image_uris')->nullable();
             $table->string('rarity')->nullable();
 
+            $table->decimal('tcg_price')->nullable();
+
         });
     }
 
