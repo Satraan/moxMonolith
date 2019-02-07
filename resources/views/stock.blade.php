@@ -24,7 +24,7 @@
         <div class="page page--stock">
             <div class="ui five item menu">
                 <a href="/"class="active item">Search for cards</a>
-                <a href="/list" class="item">View Wishlist</a>
+                <a href="/user/wishlist" class="item">View Wishlist</a>
                 <a href="/stock" class="item">View Stock</a>
                 @if (Route::has('login'))
                 @auth

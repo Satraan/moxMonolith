@@ -49,6 +49,7 @@
                             <button id="scrapeSadRobot" type="submit" class="ui grey button">Search SadRobot</button>
                             <button id="scrapeDracoti" type="submit" class="ui grey button">Search Dracoti</button>
                             <button id="scrapeUnderworldConnections" type="submit" class="ui grey button">Search Underworld Connections</button>
+                            <button id="scrapeLuckshack" type="submit" class="ui grey button">Search Luckshack</button>
                             <button id="scrapeAll" type="submit" class="ui teal button">Search All</button>
                         </div>
                     </div>

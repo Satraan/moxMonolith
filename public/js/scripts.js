@@ -188,6 +188,17 @@ function init(){
         var target = 'UnderworldConnections';
         singleScrape(target, query, value);
     });
+    $( '#scrapeLuckshack').on( "click", function() {
+        event.preventDefault();
+        $("#ajaxResult").html("").addClass('hidden');
+        $("#spinner").removeClass('hidden');
+        $("#results").removeClass('hidden');
+        var e = document.getElementById("select-card");
+        var query = e.options[e.selectedIndex].text;
+        var value = e.options[e.selectedIndex].value;
+        var target = 'Luckshack';
+        singleScrape(target, query, value);
+    });
     $( '#scrapeGeekhome').on( "click", function() {
         event.preventDefault();
         $("#ajaxResult").html("").addClass('hidden');

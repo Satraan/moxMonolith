@@ -5,9 +5,6 @@
         <div class="ui segment">
             <h3>Dashboard</h3>
             <div class="ui card">
-                <div class="image">
-                    <img src="/images/avatar2/large/kristy.png">
-                </div>
                 <div class="content">
                     <a class="header">Kristy</a>
                     <div class="meta">

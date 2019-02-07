@@ -33,6 +33,7 @@ Route::get('/scrapeDracoti', 'ScrapingController@scrapeDracoti');
 Route::get('/scrapeSadRobot', 'ScrapingController@scrapeSadRobot');
 Route::get('/scrapeUnderworldConnections', 'ScrapingController@scrapeUnderworldConnections');
 Route::get('/scrapeGeekhome', 'ScrapingController@scrapeGeekhome');
+Route::get('/scrapeLuckshack', 'ScrapingController@scrapeLuckshack');
 //Route::get('/scrapeAll', 'ScrapingController@scrapeAll');
 
 Route::get('/testApi', function (){
