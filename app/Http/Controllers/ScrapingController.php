@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Services\Scrapers\LuckshackScraperService;
 use App\Wishlist;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -231,68 +232,21 @@ class ScrapingController extends BaseController
         }
 
 
-
     }
     public function scrapeLuckshack(Request $request)
     {
-
-
-//        Keywords may be separated by AND and/or OR statements for greater control of the search results.
-//For example, Microsoft AND mouse would generate a result set that contain both words. However, for mouse OR keyboard, the result set returned would contain both or either words.
-//    Exact matches can be searched for by enclosing keywords in double-quotes.
-//For example, "notebook computer" would generate a result set which match the exact string.
-//    Brackets can be used for further control on the result set.
-//For example, Microsoft and (keyboard or mouse or "visual basic").
-
-        $result = "";
-        $stock = 0;
-        $price= "";
-        $client = new Client();
-        $retailer = 1;
-        $outOfStock = "";
-
-        $q = $request->get('query');
-        $q = (string)$q;
-        $q = preg_replace('/\s+/', '-', $q);
-
-        $url = "https://www.luckshack.co.za/" . $q;
-
-        $crawler = $client->request('GET', $url);
-
-
-        $crawler->filter('p.stock.out-of-stock')->each(function ($node) use (&$outOfStock){
-           $outOfStock =  $node->text();
-        });
-        if (!empty ($outOfStock)){
-            return "Geekhome does not have stock.";
-        }
-
-        $crawler->filter('div.product_cat-mtg-singles > div.entry-summary > p.price > span.woocommerce-Price-amount')->each(function ($node) use (&$price, &$stock){
-            $price = $node->text();
-            $stock++;
-        });
-
-        $price=preg_replace('/R/', '', $price);
-        $price = (float)$price;
-
-        $value = $request->get('value');
-
-        if ($price == 0) {
-            $result = "Geekhome does not have stock.";
-            return $result;
-        }
-        else {
-            $card = DB::table('cards')->where('scryfall_id' , '=', $value)->first();
-            $cardId = $card->id;
-
-            $this->addProduct($cardId,$retailer,$price);
-
-            $result = "Geekhome has " . $stock . " " . $q . " in stock for R" . $price;
-            return $result;
-        }
-
-
-
+		$service = resolve(LuckshackScraperService::class);
+		$result = $service->findCard($request->query('query'), $request->query('value'));
+	
+	    //ToDo - Move this text response to the FE, and return the whole object here
+	    //return json_encode($result);
+	    if(!$result->stock)
+		    return "$result->vendor doesn't have any stock";
+	    
+	    if(!$result->price)
+	    	return "$result->vendor doesn't have a price listed";
+	    
+	    return "$result->vendor has $result->stock $result->name in stock for {$result->getPriceRead()} from the $result->setName Set";
     }
 
 
