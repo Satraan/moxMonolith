@@ -15,19 +15,19 @@ use Goutte\Client;
  */
 class LuckshackScraperService implements ScraperContract
 {
-	
-	
+
+
 	/**
 	 * @var string
 	 */
 	protected $url = "https://luckshack.co.za/index.php?main_page=advanced_search_result&keyword=";
-	
-	protected $vendor = "LuckShack";
+
+	protected $vendor = "Luckshack";
 	/**
 	 * @var Client
 	 */
 	protected $client;
-	
+
 	/**
 	 * LuckshackScraperService constructor.
 	 */
@@ -35,17 +35,17 @@ class LuckshackScraperService implements ScraperContract
 	{
 		$this->client = new Client();
 	}
-	
-	
+
+
 	/**
 	 * @param $name
 	 * @param $scryfallId
 	 * @return string
 	 */
 	public function findCard($name, $scryfallId = null){
-		
+
 		// ToDo - Check based on the scryfallID if we have data on this card cached.
-		
+
 		$returnObject = new ScraperReturnObject(
 			[
 				'vendor' => $this->vendor,
@@ -54,21 +54,21 @@ class LuckshackScraperService implements ScraperContract
 				'price' => 0,
 				'stock' => 0
 			]);
-		
+
 		//$q = preg_replace('/\s+/', '+', (string)$name);
 		$url = $this->url . $name;
-		
+
 		$crawler = $this->client->request('GET', $url);
 		$crawler->filter('#catTable tr')->each(function ($node) use (&$returnObject){
 			if (strpos($node->html(), 'productListing-heading') === false) {
 				// We are not in the heading div
-				
+
 				if(strpos($node->getNode(0)->nodeValue, $returnObject->name) !== false){
 					// The card has the right name
-					
+
 					if(strpos($node->getNode(0)->nodeValue, '... more info') === false){
 						// There is stock for the card
-						
+
 						$data = explode("\n", $node->getNode(0)->nodeValue);
 						$returnObject->setName = trim($data[1]);
 						$returnObject->name = trim($data[2]);
@@ -78,8 +78,8 @@ class LuckshackScraperService implements ScraperContract
 				}
 			}
 		});
-		
+
 		return $returnObject;
 	}
-	
+
 }

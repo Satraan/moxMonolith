@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Services\Scrapers\DracotiScraperService;
 use App\Services\Scrapers\LuckshackScraperService;
 use App\Wishlist;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -49,41 +50,7 @@ class ScrapingController extends BaseController
         $result = "TopDeck has " . $stock . " " . $q . " in stock for " . $price;
         return $result;
     }
-    public function scrapeDracoti(Request $request)
-    {
 
-        $stock = "";
-        $price= "";
-        $q = $request->get('query');
-
-        $q = (string)$q;
-        $q=preg_replace('/\s+/', '-', $q);
-
-        $client = new Client();https:
-        $url = "https://shop.dracoti.co.za/product/" . $q;
-        $crawler = $client->request('GET', $url);
-
-        $crawler->filter('div.instock.purchasable > .entry-summary')->
-        each(function ($node) use (&$price, &$stock) {
-            $node->filter("p.price > .amount")->
-            each(function($node) use (&$price, &$stock){
-                $price = $price . $node->text();
-            });
-            $node->filter("p.in-stock")->
-            each(function($node) use (&$stock){
-                $stock = $node->text();
-            });
-        });
-
-        $price=preg_replace('/\s+/', '', $price);
-
-        if (empty($stock)){
-            return "Dracoti does not have stock.";
-        }
-
-        $result = "Dracoti has " . $stock . " for " . $price;
-        return $result;
-    }
     public function scrapeSadRobot(Request $request)
     {
         $price= "";
@@ -233,22 +200,29 @@ class ScrapingController extends BaseController
 
 
     }
+
     public function scrapeLuckshack(Request $request)
     {
 		$service = resolve(LuckshackScraperService::class);
 		$result = $service->findCard($request->query('query'), $request->query('value'));
-	
+
 	    //ToDo - Move this text response to the FE, and return the whole object here
 	    //return json_encode($result);
 	    if(!$result->stock)
 		    return "$result->vendor doesn't have any stock";
-	    
+
 	    if(!$result->price)
 	    	return "$result->vendor doesn't have a price listed";
-	    
+
 	    return "$result->vendor has $result->stock $result->name in stock for {$result->getPriceRead()} from the $result->setName Set";
     }
+    public function scrapeDracoti(Request $request)
+    {
+        $service = resolve(DracotiScraperService::class);
+        $result = $service->findCard($request->query('query'), $request->query('value'));
 
+        return "$result->vendor has $result->stock $result->name in stock for {$result->getPriceRead()}";
+    }
 
 
 

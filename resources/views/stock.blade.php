@@ -43,7 +43,8 @@
                         <th>Name</th>
                         <th>Desc</th>
                         <th>
-                            <button id="checkStock" type="button">Check stock</button>
+                            <button id="checkStock" type="button">
+                                Check stock</button>
                         </th>
                     </tr>
                     </thead>
