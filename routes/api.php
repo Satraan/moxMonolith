@@ -27,7 +27,7 @@ Route::get('/checkStock', 'WishlistController@checkAllStock');
 Route::get('/getPrices', 'WishlistController@getPrices');
 
 
-
+Route::get('/scrape/{vendor}', 'ScrapingController@scrapeVendor');
 Route::get('/scrapeTopDeck', 'ScrapingController@scrapeTopDeck');
 Route::get('/scrapeDracoti', 'ScrapingController@scrapeDracoti');
 Route::get('/scrapeSadRobot', 'ScrapingController@scrapeSadRobot');

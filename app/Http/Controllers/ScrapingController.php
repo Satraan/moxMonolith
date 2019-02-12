@@ -9,21 +9,51 @@ use App\Services\Scrapers\LuckshackScraperService;
 use App\Services\Scrapers\SadRobotScraperService;
 use App\Services\Scrapers\TopDeckScraperService;
 use App\Services\Scrapers\UnderworldConnectionsScraperService;
-use App\Wishlist;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use App\Card;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Goutte\Client;
-use Illuminate\Support\Facades\Log;
+
 
 class ScrapingController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public $vendor;
+
+    public function __construct()
+    {
+        $this->vendor =
+            [
+                'luckshack' => LuckshackScraperService::class,
+                'dracoti' => DracotiScraperService::class,
+                'topdeck' => TopDeckScraperService::class,
+            ];
+    }
+
+
+    public function scrapeVendor(Request $request, $vendor)
+    {
+        if(!isset($this->vendor[$vendor])){
+            abort(404);
+        }
+		$service = resolve($this->vendor[$vendor]);
+		$result = $service->findCard($request->query('query'), $request->query('value'));
+
+	    //ToDo - Move this text response to the FE, and return the whole object here
+	    //return json_encode($result);
+	    if(!$result->stock)
+		    return "$result->vendor doesn't have any stock";
+
+	    if(!$result->price)
+	    	return "$result->vendor doesn't have a price listed";
+
+        $this->addProduct($result->scryfallId, $result->vendor, $result->price);
+
+        $endString = isset($result->setName) ? " from set $result->setName." : ".";
+	    return "$result->vendor has $result->stock $result->name in stock for {$result->getPriceRead()} " . $endString;
+    }
     public function scrapeLuckshack(Request $request)
     {
 		$service = resolve(LuckshackScraperService::class);
@@ -37,6 +67,8 @@ class ScrapingController extends BaseController
 	    if(!$result->price)
 	    	return "$result->vendor doesn't have a price listed";
 
+        $this->addProduct($result->scryfallId, $result->vendor, $result->price);
+
 	    return "$result->vendor has $result->stock $result->name in stock for {$result->getPriceRead()} from the $result->setName Set";
     }
     public function scrapeDracoti(Request $request)
@@ -48,6 +80,8 @@ class ScrapingController extends BaseController
             return "$result->vendor doesn't have any stock";
         if(!$result->price)
             return "$result->vendor doesn't have a price listed";
+
+        $this->addProduct($result->scryfallId, $result->vendor, $result->price);
 
         return "$result->vendor has $result->stock $result->name in stock for {$result->getPriceRead()}";
     }
@@ -61,6 +95,8 @@ class ScrapingController extends BaseController
         if(!$result->price)
             return "$result->vendor doesn't have a price listed";
 
+        $this->addProduct($result->scryfallId, $result->vendor, $result->price);
+
         return "$result->vendor has $result->stock $result->name in stock for {$result->getPriceRead()}";
     }
     public function scrapeGeekhome(Request $request)
@@ -73,6 +109,8 @@ class ScrapingController extends BaseController
         if(!$result->price)
             return "$result->vendor doesn't have a price listed";
 
+        $this->addProduct($result->scryfallId, $result->vendor, $result->price);
+
         return "$result->vendor has $result->stock $result->name in stock for {$result->getPriceRead()}";
     }
     public function scrapeUnderworldConnections(Request $request)
@@ -84,6 +122,8 @@ class ScrapingController extends BaseController
             return "$result->vendor doesn't have any stock";
         if(!$result->price)
             return "$result->vendor doesn't have a price listed";
+
+        $this->addProduct($result->scryfallId, $result->vendor, $result->price);
 
         return "$result->vendor has $result->stock $result->name in stock for {$result->getPriceRead()}";
     }
@@ -106,10 +146,14 @@ class ScrapingController extends BaseController
     public function addProduct($card, $retailer, $price){
 
         $product = Product::firstOrNew(array('card_id' => $card, 'retailer_id' => $retailer));
+        $price = preg_replace('/R/', '', $price);
+        $price = (float)$price;
 
         $product->card_id = $card;
         $product->retailer_id = $retailer;
         $product->price = $price;
+
+
         $product->save();
 
         //Redirects to list view
