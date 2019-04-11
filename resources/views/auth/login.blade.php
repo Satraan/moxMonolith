@@ -18,8 +18,6 @@
 
 @section('content')
 
-
-
 <div class="page--login">
     <div class="ui container">
         <div class="ui two column grid">

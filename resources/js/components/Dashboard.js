@@ -15,7 +15,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import SimpleLineChart from './SimpleLineChart';
 import SimpleTable from './SimpleTable';
 
 const drawerWidth = 240;
@@ -167,12 +166,6 @@ render() {
     </Drawer>
     <main className={classes.content}>
 <div className={classes.appBarSpacer} />
-    <Typography variant="h4" gutterBottom component="h2">
-        Orders
-        </Typography>
-        <Typography component="div" className={classes.chartContainer}>
-<SimpleLineChart />
-    </Typography>
     <Typography variant="h4" gutterBottom component="h2">
         Products
         </Typography>

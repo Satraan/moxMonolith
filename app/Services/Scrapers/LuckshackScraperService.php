@@ -61,6 +61,7 @@ class LuckshackScraperService implements ScraperContract
             $name = "\"" . $name . "\"";
         }
 		$url = $this->url . $name;
+        Log::info($url);
 		$crawler = $this->client->request('GET', $url);
 		$crawler->filter('#catTable tr')->each(function ($node) use (&$returnObject){
 			if (strpos($node->html(), 'productListing-heading') === false) {

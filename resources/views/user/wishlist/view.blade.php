@@ -37,6 +37,7 @@
                 <tr class="center aligned">
                     <th>Name</th>
                     <th>TCG Price</th>
+                    <th>In stock?</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -48,6 +49,7 @@
                             {{$card -> name}}
                         </a>
                     </td>
+                    <td class="center aligned">$ {{$card -> tcg_price}}</td>
                     <td class="center aligned">$ {{$card -> tcg_price}}</td>
                     <td class="center aligned">
                         <a href="/deleteCard/{{$wishlist -> id}}/{{$card->id}}">

@@ -15,6 +15,7 @@ require('./bootstrap');
 
 require('./components/App');
 require('./components/Dashboard');
+require('./components/Login');
 
 
 import App from './components/App'
