@@ -263,6 +263,27 @@ function init(){
 
     $('.ui.dropdown').dropdown();
 
+
+    $('#importTopDeck').on( "click", function() {
+        event.preventDefault();
+console.log("DOING IMPROT");
+        return $.ajax({
+            url: 'api/importTopDeck',
+            type: 'GET',
+            data: {query: query, value:value},
+            error: function() {
+            },
+            success: function(data) {
+                // return data;
+
+               console.log("SUCC");
+               return data;
+            }
+        });
+    });
+
+
+
 }
 
 $(document).ready(function () {

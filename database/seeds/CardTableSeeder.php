@@ -15,7 +15,7 @@ class CardTableSeeder extends Seeder
         $json = File::get("database/data/scryfall.json");
         $data = json_decode($json);
         unset($json);
-//        $counter=0;
+        $counter=0;
         foreach ($data as $obj){
 //            $counter++;
 //            if($counter > 100){

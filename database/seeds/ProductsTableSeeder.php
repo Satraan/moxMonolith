@@ -16,7 +16,8 @@ class ProductsTableSeeder extends Seeder
         Product::create([
             "card_id" => 1,
             "retailer_id" => 1,
-            "price" => 330
+            "price" => 330,
+            "stock" => 1
         ]);
 
     }

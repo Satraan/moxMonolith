@@ -21,6 +21,7 @@
     <link href="/css/app.css" rel="stylesheet" type="text/css">
     <link href="/css/style.css" rel="stylesheet" type="text/css">
     <script src="/js/app.js" rel="script"></script>
+    <script src="/js/admin.js" rel="script"></script>
 <!--    <script src="/js/scripts.js" rel="script"></script>-->
     <script type="text/javascript" src="/js/selectize.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/selectize.css" />

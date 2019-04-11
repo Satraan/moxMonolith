@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductsTable extends Migration
+class AddingProductTimeStamps extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
-            $table->increments('id');
-            $table->uuid('card_id');
-            $table->uuid('retailer_id');
-            $table->float('price');
-            $table->integer('stock');
+        Schema::table('products', function (Blueprint $table) {
+           $table->timestamps();
         });
     }
 
@@ -29,6 +25,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        //
     }
 }

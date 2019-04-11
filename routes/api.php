@@ -36,6 +36,8 @@ Route::get('/scrapeGeekhome', 'ScrapingController@scrapeGeekhome');
 Route::get('/scrapeLuckshack', 'ScrapingController@scrapeLuckshack');
 //Route::get('/scrapeAll', 'ScrapingController@scrapeAll');
 
+Route::get('/importTopdeck', 'AdminController@importTopdeck');
+Route::get('/getProduct', 'AdminController@getProduct');
 Route::get('/testApi', function (){
 
     $request = new GuzzleHttp\Psr7\Request (
@@ -49,6 +51,8 @@ Route::get('/testApi', function (){
 
     return $result->getBody()->getContents();
 });
+
+
 
 
 

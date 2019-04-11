@@ -44,3 +44,10 @@ Route::get('/user/settings', function () {
     return view('/user/settings');});
 
 Route::get('/user/wishlist/', 'WishlistController@list');
+
+
+Route::get('/admin', 'AdminController@index');
+
+
+
+

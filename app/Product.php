@@ -11,7 +11,7 @@ class Product extends Model
      *
      * @var array
      */
-    public $timestamps = false;
+    public $timestamps = true;
     protected $fillable = [
         'id',
         'card_id',

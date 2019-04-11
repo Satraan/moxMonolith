@@ -27,5 +27,12 @@ class RetailersTableSeeder extends Seeder
             'query_key' => '-',
             'query_url' => "https://www.geekhome.co.za/product/"
         ]);
+        Retailer::create([
+            'id' => 3,
+            'name' => 'TopDeck',
+            'website' => 'www.topdeck.com',
+            'query_key' => '-',
+            'query_url' => "https://store.topdecksa.co.za/search?q="
+        ]);
     }
 }
